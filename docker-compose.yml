@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: ff-client
+    ports:
+      - 3000:3000
+    volumes:
+      - /usr/app/node_modules
+      - ./frontend:/usr/app
