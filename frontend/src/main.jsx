@@ -1,10 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import ReactShowcase from "./ReactShowcase"
+import Header from "./Header"
 
 ReactDOM.render(
     <React.StrictMode>
-        <ReactShowcase />
+        <Header />
     </React.StrictMode>,
     document.getElementById("root")
 )
