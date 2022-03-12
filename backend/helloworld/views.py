@@ -5,10 +5,19 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, GroupSerializer
+import requests
 
 
 def helloWorldView(request):
-    return HttpResponse("Hello, World!")
+    api_key = "vA48KOFhclsGtE0mdZ51qu2PccDsTb125ocpup71nwDZHgLV6zFsaY-Ysc-AIdMVfcqxF_l1j8Vdj0aNLzSsGvc6mSTDCF4j6sRC2Fr1pEBTwGIlvuuH5E0QxSwpYnYx"
+    headers = {
+        "Authorization": "Bearer %s" % api_key,
+    }
+    response = requests.get(
+        "https://api.yelp.com/v3/autocomplete?text=del&latitude=37.786882&longitude=-122.399972",
+        headers=headers,
+    )
+    return HttpResponse(response.text)
 
 
 def userView(request, userId):
