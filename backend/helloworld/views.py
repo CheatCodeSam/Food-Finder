@@ -9,7 +9,7 @@ import requests
 
 
 def helloWorldView(request):
-    api_key = "vA48KOFhclsGtE0mdZ51qu2PccDsTb125ocpup71nwDZHgLV6zFsaY-Ysc-AIdMVfcqxF_l1j8Vdj0aNLzSsGvc6mSTDCF4j6sRC2Fr1pEBTwGIlvuuH5E0QxSwpYnYx"
+    api_key = "ENTER API KEY"
     headers = {
         "Authorization": "Bearer %s" % api_key,
     }
