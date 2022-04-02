@@ -1,13 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import Header from "./Header"
-import FoodCard from "./FoodCard"
+import FoodCards from "./FoodCards"
 
 ReactDOM.render(
     <React.StrictMode>
         <Header />
         <div style={{ position: "relative", paddingTop: "10px" }}>
-            <FoodCard />
+            <FoodCards />
         </div>
     </React.StrictMode>,
     document.getElementById("root")

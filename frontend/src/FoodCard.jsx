@@ -1,41 +1,57 @@
-import { Card, CardMedia } from "@mui/material"
 import React from "react"
-import TinderCard from "react-tinder-card"
-import "./App.css"
+import PropTypes from "prop-types"
+import { Card, CardMedia, Typography } from "@mui/material"
+import styled from "@emotion/styled"
+import { LocationOnOutlined as LocationOnOutlinedIcon } from "@mui/icons-material"
 
-const FoodCard = () => {
-    const food = [
-        {
-            name: "Pizza",
-            url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-keto-pizza-073-1544039876.jpg",
-        },
-        {
-            name: "Ramen",
-            url: "http://cdn.shopify.com/s/files/1/0111/1729/7722/articles/shutterstock_697241275_tonkotsu_ramen-landscape.jpg?v=1562316760",
-        },
-        {
-            name: "Steak",
-            url: "https://www.cookingclassy.com/wp-content/uploads/2019/07/steak-marinade-12.jpg",
-        },
-    ]
+const FoodName = styled(Typography)`
+    color: #fff;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+`
+const FoodDistance = styled(FoodName)`
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+`
+const FoodPrice = styled(FoodName)`
+    margin-left: 7px;
+    color: #009933;
+`
+
+const FoodCard = ({ img, title, distance, price }) => {
     return (
-        <div>
-            <div className="foodCard__container">
-                {food.map((dish) => (
-                    <TinderCard className="swipe" key={dish.name}>
-                        <Card sx={{ height: "50vh" }}>
-                            <CardMedia
-                                component="img"
-                                image={dish.url}
-                                width="100%"
-                                height="100%"
-                            />
-                        </Card>
-                    </TinderCard>
-                ))}
+        <Card
+            sx={{
+                width: "95vw",
+                height: "70vh",
+                boxShadow: "2px 2px 10px 0px rgba(154, 159, 174, 1)",
+            }}
+        >
+            <CardMedia component="img" image={img} width="100%" height="100%" />
+            <div
+                style={{
+                    position: "absolute",
+                    bottom: 20,
+                    margin: "10px",
+                }}
+            >
+                <FoodName variant="h3">{title}</FoodName>
+                <FoodDistance variant="subtitle1">
+                    <LocationOnOutlinedIcon /> {distance}
+                </FoodDistance>
+                <FoodPrice>{price}</FoodPrice>
             </div>
-        </div>
+        </Card>
     )
+}
+
+FoodCard.propTypes = {
+    img: PropTypes.string,
+    title: PropTypes.string,
+    distance: PropTypes.number,
+    price: PropTypes.array,
 }
 
 export default FoodCard
