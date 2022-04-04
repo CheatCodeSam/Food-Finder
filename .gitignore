@@ -6,3 +6,4 @@ dist-ssr
 .vscode
 __pycache__
 *.sqlite3
+ngrok

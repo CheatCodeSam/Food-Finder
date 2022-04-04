@@ -1,4 +1,4 @@
-FROM node:17.4.0-alpine AS build
+FROM node:17-alpine AS build
 
 WORKDIR /app
 ADD ./package.json ./
@@ -6,6 +6,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx
+FROM nginx:latest
 EXPOSE 3000
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html

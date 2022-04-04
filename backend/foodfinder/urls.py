@@ -18,5 +18,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("geofinder.urls")),
+    path("api/", include("geofinder.urls")),
 ]
