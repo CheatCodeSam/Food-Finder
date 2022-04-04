@@ -36,21 +36,6 @@ const FoodPrice = styled(StyledTypography)`
     font-weight: bold;
     margin: 5px;
 `
-const ButtonsContainer = styled(Container)`
-    position: absolute;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-`
-const FoodButtonsContainer = styled(ButtonsContainer)`
-    top: 0;
-    left: 0;
-`
-const LinkButtonsContainer = styled(ButtonsContainer)`
-    bottom: 0;
-    left: 0;
-    justify-content: space-around;
-`
 const FoodDetailContainer = styled(Container)`
     padding: 0;
 `
@@ -61,44 +46,6 @@ const FoodDescription = styled(StyledTypography)`
     padding: 5px;
     font-size: 15px;
     font-weight: 500;
-`
-const BackButton = styled.button`
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 5px 5px 20px 0px rgba(154, 159, 174, 0.2);
-    &:active {
-        transform: translate(2px, 2px);
-        box-shadow: box-shadow: -10px -10px 0px 0px rgba(154, 159, 174, 0.2);
-}`
-const FavButton = styled(BackButton)`
-    color: #fff;
-    background-color: #ffc520;
-    border-radius: 50%;
-`
-const LinkButton = styled.button`  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #FFC529;
-    color: #FFEFC3;
-    height: 50px;
-    padding: 20px;
-    border-radius: 40px;
-    border: none;
-    box-shadow: 8px 8px 25px 0px rgba(56, 70, 103, 0.15);
-    font-family: "Montserrat", sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    margin: 2px;
-    &:active {
-        transform: translate(2px, 2px);
-        box-shadow: box-shadow: -10px -10px 0px 0px rgba(154, 159, 174, 0.2);
 `
 
 const FoodDetail = ({ dish }) => {
