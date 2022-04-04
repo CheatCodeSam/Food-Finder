@@ -24,15 +24,18 @@ const FoodCards = (props) => {
 
     const currentIndexRef = useRef(0)
 
-    const getFood = useCallback(async () => {
-        const _food = await fetchFood()
+    const getFood = useCallback(async (lat, long) => {
+        const _food = await fetchFood(lat, long)
         setFood(_food)
         updateCurrentIndex(_food.length)
     }, [])
 
     useEffect(() => {
-        getFood().catch(console.error)
-        navigator.geolocation.getCurrentPosition(console.log)
+        navigator.geolocation.getCurrentPosition((geopos) => {
+            const lat = geopos.coords.latitude
+            const long = geopos.coords.longitude
+            getFood(lat, long).catch(console.error)
+        })
     }, [])
 
     const updateCurrentIndex = (val) => {
@@ -50,7 +53,11 @@ const FoodCards = (props) => {
     const outOfFrame = (idx) => {
         updateCurrentIndex(idx)
         if (idx < 1) {
-            getFood()
+            navigator.geolocation.getCurrentPosition((geopos) => {
+                const lat = geopos.coords.latitude
+                const long = geopos.coords.longitude
+                getFood(lat, long).catch(console.error)
+            })
         }
     }
 
@@ -59,7 +66,7 @@ const FoodCards = (props) => {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
                 {food.map((dish, index) => (
                     <SwipeCard
-                        key={dish.id}
+                        key={dish.img}
                         onSwipe={(dir) => swiped(dish, dir)}
                         onCardLeftScreen={() => outOfFrame(index)}
                     >

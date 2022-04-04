@@ -12,7 +12,7 @@ services:
       - 3000:3000
     volumes:
       - /usr/app/node_modules
-      - ./frontend:/usr/app
+      - ./frontend/src:/usr/app/src
   server:
     build:
       context: ./backend
@@ -21,7 +21,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - ./server:/usr/src/app
+      - ./backend:/usr/src/app
   nginx:
     build:
       context: ./nginx
