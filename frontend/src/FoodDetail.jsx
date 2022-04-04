@@ -57,18 +57,13 @@ const FoodDetail = ({ dish }) => {
                     borderRadius: "10px",
                 }}
             >
-                <CardMedia
-                    component="img"
-                    image="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-keto-pizza-073-1544039876.jpg"
-                    width="100%"
-                    height="100%"
-                />
+                <CardMedia component="img" image={dish.img} width="100%" height="100%" />
             </Card>
 
             <FoodDetailContainer>
                 <FoodTitle variant="h4">{dish.title}</FoodTitle>
                 <FoodBusiness variant="h5">
-                    <LocationOn style={{ color: "FFC529" }} /> Restaurant
+                    <LocationOn style={{ color: "FFC529" }} /> {dish.business}
                 </FoodBusiness>
                 <Container
                     sx={{
@@ -79,15 +74,20 @@ const FoodDetail = ({ dish }) => {
                 >
                     <div>
                         <FoodRating variant="subtitle4">
-                            <Star style={{ fontSize: "20", color: "009933" }} /> 4.5
+                            <Star style={{ fontSize: "20", color: "009933" }} />{" "}
+                            {dish.rating}
                         </FoodRating>
                     </div>
-                    <FoodDistance>2mi</FoodDistance>
+                    <FoodDistance>
+                        {(dish.distance * 0.000621371192).toFixed(2)} mi
+                    </FoodDistance>
                 </Container>
-                <FoodPrice variant="h4">$10</FoodPrice>
+                <FoodPrice variant="h4">{dish.price}</FoodPrice>
                 <FoodDescription>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque quasi
-                    id libero facilis facere. Voluptatibus cupiditate distinctio autem
+                    <p>{dish.address} </p>
+                    <p>
+                        {dish.city}, {dish.state}{" "}
+                    </p>
                 </FoodDescription>
             </FoodDetailContainer>
         </Box>
