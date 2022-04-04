@@ -21,12 +21,15 @@ const FoodPrice = styled(FoodName)`
 `
 
 const FoodCard = ({ img, title, distance, price }) => {
+    const getMiles = (meters) => {
+        return meters * 0.000621371192
+    }
     return (
         <Card
             sx={{
                 width: "95vw",
                 height: "70vh",
-                boxShadow: "2px 2px 10px 0px rgba(154, 159, 174, 1)",
+                // boxShadow: "2px 2px 10px 0px rgba(154, 159, 174, 1)",
             }}
         >
             <CardMedia component="img" image={img} width="100%" height="100%" />
@@ -39,7 +42,7 @@ const FoodCard = ({ img, title, distance, price }) => {
             >
                 <FoodName variant="h3">{title}</FoodName>
                 <FoodDistance variant="subtitle1">
-                    <LocationOnOutlinedIcon /> {distance}
+                    <LocationOnOutlinedIcon /> {getMiles(distance).toFixed(2)} Miles
                 </FoodDistance>
                 <FoodPrice>{price}</FoodPrice>
             </div>
