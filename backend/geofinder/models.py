@@ -38,6 +38,15 @@ class MenuItem(models.Model):
         blank=True,
     )
 
-    business = models.ForeignKey(
-        Business, on_delete=models.CASCADE, related_name="menuitems"
+    image = models.CharField(
+        max_length=100,
+        null=False,
+        blank=False,
     )
+
+    business = models.ForeignKey(
+        Business, on_delete=models.CASCADE, related_name="menuitems", null=True
+    )
+
+    def __str__(self):
+        return self.title

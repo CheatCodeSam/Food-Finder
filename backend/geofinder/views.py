@@ -5,6 +5,15 @@ import json
 from bs4 import BeautifulSoup
 import random
 
+from .models import MenuItem
+
+
+def create_menuitem_model(model_dict):
+    model = MenuItem(
+        title=model_dict["title"], price=model_dict["price"][0], image=model_dict["img"]
+    )
+    model.save()
+
 
 def menu_item_but_no_placeholder(tag):
     classes = tag.get_attribute_list("class")
@@ -63,6 +72,7 @@ def getItemsView(request):
                 item["business"] = business["name"]
 
                 item["distance"] = business["distance"]
+                create_menuitem_model(item)
                 menu_items.append(item)
     json_object = json.dumps(random.sample(menu_items, 10), indent=4)
     return HttpResponse(json_object)
