@@ -1,4 +1,4 @@
-from .models import Business
+from ..models import Business
 
 
 def create_business_model(model_dict):

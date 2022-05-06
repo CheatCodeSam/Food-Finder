@@ -5,14 +5,12 @@ from functools import partial
 import requests
 from bs4 import BeautifulSoup
 from django.http import HttpResponse
-from django.shortcuts import render
-from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer
 
 from .auth import BearerAuth
-from .models import Business, MenuItem
+from .models import MenuItem
 from .serializers import MenuItemListSerializer
-from .util import get_business_model
+from .util import get_business_model, get_menuitem_models
 
 
 def create_menuitem_model(model_dict, biz):
@@ -24,15 +22,6 @@ def create_menuitem_model(model_dict, biz):
     )
     model.save()
     return model
-
-
-def menu_item_but_no_placeholder(tag):
-    classes = tag.get_attribute_list("class")
-    return (
-        "menu-item" in classes
-        and not "menu-item-placeholder-photo" in classes
-        and not "menu-item-no-photo" in classes
-    )
 
 
 def getItemsView(request):
@@ -54,17 +43,7 @@ def getItemsView(request):
 
     for business in json_response["businesses"]:
         biz_mod = get_business_model(business)
-        if biz_mod.method_for_query == "RD":
-            response = requests.get(
-                f"https://www.yelp.com/menu/{biz_mod.slug}/", allow_redirects=False
-            )
-            if response.status_code == 200:
-                print("menu")
-            else:
-                response = requests.get(
-                    f"https://www.yelp.com/biz/{biz_mod.slug}", allow_redirects=False
-                )
-                print("rec", response.status_code)
+        get_menuitem_models(biz_mod)
 
     return HttpResponse(response.text)
 
