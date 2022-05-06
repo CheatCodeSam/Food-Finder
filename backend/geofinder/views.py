@@ -1,3 +1,4 @@
+from functools import partial
 from django.shortcuts import render
 from django.http import HttpResponse
 import requests
@@ -5,6 +6,10 @@ import json
 from bs4 import BeautifulSoup
 import random
 from rest_framework import viewsets
+
+from .serializers import MenuItemListSerializer
+
+from rest_framework.renderers import JSONRenderer
 
 from .models import Business, MenuItem
 
@@ -101,3 +106,9 @@ def getItemsView(request):
                 menu_items.append(item)
     json_object = json.dumps(random.sample(menu_items, 10), indent=4)
     return HttpResponse(json_object)
+
+
+def getMenuItems(request):
+    item = MenuItem.objects.get(pk=1)
+    ser = MenuItemListSerializer(item, context={"distance": "100"})
+    return HttpResponse(JSONRenderer().render(ser.data))
