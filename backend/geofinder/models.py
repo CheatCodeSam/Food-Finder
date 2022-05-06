@@ -7,6 +7,7 @@ class Business(models.Model):
         NONE = "NA", "None"
         MENU = "MU", "Menu"
         RECOMMENDED = "RC", "Recommended"
+        READY = "RD", "Ready"
 
     title = models.CharField(max_length=100, null=False, blank=False)
     slug = models.SlugField(null=False, blank=False, unique=True)
@@ -19,7 +20,7 @@ class Business(models.Model):
     method_for_query = models.CharField(
         max_length=2,
         choices=MethodForQuery.choices,
-        default=MethodForQuery.NONE,
+        default=MethodForQuery.READY,
     )
 
     def __str__(self):

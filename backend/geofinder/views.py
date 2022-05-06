@@ -26,22 +26,6 @@ def create_menuitem_model(model_dict, biz):
     return model
 
 
-def create_business_model(model_dict):
-    print(model_dict)
-    model = Business(
-        title=model_dict["name"],
-        slug=model_dict["alias"],
-        price="$",
-        rating=model_dict["rating"],
-        location=model_dict["location"]["address1"],
-        city=model_dict["location"]["city"],
-        state=model_dict["location"]["state"],
-        url=model_dict["url"],
-    )
-    model.save()
-    return model
-
-
 def menu_item_but_no_placeholder(tag):
     classes = tag.get_attribute_list("class")
     return (
@@ -69,7 +53,18 @@ def getItemsView(request):
     json_response = response.json()
 
     for business in json_response["businesses"]:
-        get_business_model(business)
+        biz_mod = get_business_model(business)
+        if biz_mod.method_for_query == "RD":
+            response = requests.get(
+                f"https://www.yelp.com/menu/{biz_mod.slug}/", allow_redirects=False
+            )
+            if response.status_code == 200:
+                print("menu")
+            else:
+                response = requests.get(
+                    f"https://www.yelp.com/biz/{biz_mod.slug}", allow_redirects=False
+                )
+                print("rec", response.status_code)
 
     return HttpResponse(response.text)
 
