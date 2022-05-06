@@ -1,15 +1,6 @@
 version: "3.8"
 
 services:
-  client:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: ff-client
-    depends_on:
-      - server
-    ports:
-      - 3000:3000
   server:
     build:
       context: ./backend
@@ -22,14 +13,7 @@ services:
       - ./backend:/usr/src/app
     depends_on:
       - redis
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile.dev
-    container_name: ff-nginx
-    restart: always
-    depends_on:
-      - server
-      - client
+  redis:
+    image: redis
     ports:
-      - 80:80
+      - "6379:6379"
