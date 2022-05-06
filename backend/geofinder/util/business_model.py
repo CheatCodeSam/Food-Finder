@@ -1,4 +1,5 @@
 from ..models import Business
+from .menuitem_models import get_menuitem_models
 
 
 def create_business_model(model_dict):
@@ -13,6 +14,7 @@ def create_business_model(model_dict):
         url=model_dict["url"],
     )
     model.save()
+    get_menuitem_models(model)
     return model
 
 

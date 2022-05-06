@@ -4,6 +4,17 @@ from bs4 import BeautifulSoup
 from ..models import Business, MenuItem
 
 
+def create_menuitem_model(model_dict, biz):
+    model = MenuItem(
+        title=model_dict["title"],
+        price="10",
+        image=model_dict["img"],
+        business=biz,
+    )
+    model.save()
+    return model
+
+
 def menu_item_but_no_placeholder(tag):
     classes = tag.get_attribute_list("class")
     return (
@@ -46,9 +57,13 @@ def get_menuitem_models(business: Business):
         )
         if menu_response.status_code == 200:
             scraped_items = scrape_menu(menu_response.text)
+            for item in scraped_items:
+                create_menuitem_model(item, business)
         else:
             rec_response = requests.get(
                 f"https://www.yelp.com/biz/{business.slug}", allow_redirects=False
             )
             if rec_response.status_code == 200:
                 scraped_items = scrape_rec(rec_response.text)
+                for item in scraped_items:
+                    create_menuitem_model(item, business)

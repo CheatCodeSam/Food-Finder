@@ -43,7 +43,6 @@ def getItemsView(request):
 
     for business in json_response["businesses"]:
         biz_mod = get_business_model(business)
-        get_menuitem_models(biz_mod)
 
     return HttpResponse(response.text)
 
