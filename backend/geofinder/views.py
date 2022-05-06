@@ -12,6 +12,7 @@ from rest_framework.renderers import JSONRenderer
 from .auth import BearerAuth
 from .models import Business, MenuItem
 from .serializers import MenuItemListSerializer
+from .util import get_business_model
 
 
 def create_menuitem_model(model_dict, biz):
@@ -68,7 +69,7 @@ def getItemsView(request):
     json_response = response.json()
 
     for business in json_response["businesses"]:
-        resturant_slug = business["alias"]
+        get_business_model(business)
 
     return HttpResponse(response.text)
 
