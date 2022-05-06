@@ -13,7 +13,10 @@ class Business(models.Model):
     slug = models.SlugField(null=False, blank=False, unique=True)
     price = models.CharField(max_length=20, null=False, blank=False)
     rating = models.CharField(max_length=20, null=False, blank=False)
-    location = models.CharField(max_length=100, null=False, blank=False)
+    location = models.CharField(max_length=100, null=False, blank=True)
+    city = models.CharField(max_length=100, null=False, blank=False)
+    state = models.CharField(max_length=100, null=False, blank=False)
+    url = models.CharField(max_length=100, null=False, blank=False)
     method_for_query = models.CharField(
         max_length=2,
         choices=MethodForQuery.choices,
@@ -21,7 +24,7 @@ class Business(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class MenuItem(models.Model):

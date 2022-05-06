@@ -4,15 +4,36 @@ import requests
 import json
 from bs4 import BeautifulSoup
 import random
+from rest_framework import viewsets
 
-from .models import MenuItem
+from .models import Business, MenuItem
 
 
-def create_menuitem_model(model_dict):
+def create_menuitem_model(model_dict, biz):
     model = MenuItem(
-        title=model_dict["title"], price=model_dict["price"][0], image=model_dict["img"]
+        title=model_dict["title"],
+        price=model_dict["price"][0],
+        image=model_dict["img"],
+        business=biz,
     )
     model.save()
+    return model
+
+
+def create_business_model(model_dict):
+    print(model_dict)
+    model = Business(
+        title=model_dict["name"],
+        slug=model_dict["alias"],
+        price="$",
+        rating=model_dict["rating"],
+        location=model_dict["location"]["address1"],
+        city=model_dict["location"]["city"],
+        state=model_dict["location"]["state"],
+        url=model_dict["url"],
+    )
+    model.save()
+    return model
 
 
 def menu_item_but_no_placeholder(tag):
@@ -47,7 +68,10 @@ def getItemsView(request):
 
     for business in json_response["businesses"]:
         resturant_slug = business["alias"]
+        if Business.objects.filter(slug=resturant_slug).exists():
+            biz = Business.objects.get(slug=resturant_slug)
 
+        biz_model = create_business_model(business)
         response = requests.get(
             f"https://www.yelp.com/menu/{resturant_slug}/", allow_redirects=False
         )
@@ -72,7 +96,8 @@ def getItemsView(request):
                 item["business"] = business["name"]
 
                 item["distance"] = business["distance"]
-                create_menuitem_model(item)
+
+                create_menuitem_model(item, biz_model)
                 menu_items.append(item)
     json_object = json.dumps(random.sample(menu_items, 10), indent=4)
     return HttpResponse(json_object)
