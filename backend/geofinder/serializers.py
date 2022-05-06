@@ -1,6 +1,8 @@
 from cmath import log
-from .models import MenuItem
+
 from rest_framework import serializers
+
+from .models import MenuItem
 
 
 class MenuItemListSerializer(serializers.ModelSerializer):

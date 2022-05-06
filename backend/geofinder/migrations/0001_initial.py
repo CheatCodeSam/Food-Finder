@@ -8,29 +8,69 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Business',
+            name="Business",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=100)),
-                ('slug', models.SlugField(unique=True)),
-                ('price', models.CharField(max_length=20)),
-                ('rating', models.CharField(max_length=20)),
-                ('location', models.CharField(max_length=100)),
-                ('method_for_query', models.CharField(choices=[('LD', 'Loading'), ('NA', 'None'), ('MU', 'Menu'), ('RC', 'Recommended')], default='NA', max_length=2)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=100)),
+                ("slug", models.SlugField(unique=True)),
+                ("price", models.CharField(max_length=20)),
+                ("rating", models.CharField(max_length=20)),
+                ("location", models.CharField(max_length=100)),
+                (
+                    "method_for_query",
+                    models.CharField(
+                        choices=[
+                            ("LD", "Loading"),
+                            ("NA", "None"),
+                            ("MU", "Menu"),
+                            ("RC", "Recommended"),
+                        ],
+                        default="NA",
+                        max_length=2,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='MenuItem',
+            name="MenuItem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=100)),
-                ('price', models.CharField(blank=True, help_text='Item Price', max_length=20, null=True)),
-                ('business', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='menuitems', to='geofinder.business')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=100)),
+                (
+                    "price",
+                    models.CharField(
+                        blank=True, help_text="Item Price", max_length=20, null=True
+                    ),
+                ),
+                (
+                    "business",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="menuitems",
+                        to="geofinder.business",
+                    ),
+                ),
             ],
         ),
     ]
