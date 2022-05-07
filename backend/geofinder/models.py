@@ -9,13 +9,13 @@ class Business(models.Model):
         RECOMMENDED = "RC", "Recommended"
         READY = "RD", "Ready"
 
-    title = models.CharField(max_length=100, null=False, blank=False)
-    slug = models.SlugField(null=False, blank=False, unique=True)
+    title = models.CharField(max_length=255, null=False, blank=False)
+    slug = models.SlugField(null=False, blank=False, unique=True, max_length=255)
     price = models.CharField(max_length=20, null=False, blank=False)
     rating = models.CharField(max_length=20, null=False, blank=False)
-    location = models.CharField(max_length=100, null=False, blank=True)
-    city = models.CharField(max_length=100, null=False, blank=False)
-    state = models.CharField(max_length=100, null=False, blank=False)
+    location = models.CharField(max_length=255, null=False, blank=True)
+    city = models.CharField(max_length=255, null=False, blank=False)
+    state = models.CharField(max_length=255, null=False, blank=False)
     url = models.CharField(max_length=255, null=False, blank=False)
     method_for_query = models.CharField(
         max_length=2,

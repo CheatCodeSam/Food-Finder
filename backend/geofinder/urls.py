@@ -5,5 +5,4 @@ from . import views
 
 urlpatterns = [
     path("geofind/", views.getItemsView),
-    path("test/", views.getMenuItems),
 ]

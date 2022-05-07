@@ -1,27 +1,10 @@
-import json
-import random
-from functools import partial
-
 import requests
-from bs4 import BeautifulSoup
 from django.http import HttpResponse
-from rest_framework.renderers import JSONRenderer
-
+import json
 from .auth import BearerAuth
 from .models import MenuItem
 from .serializers import MenuItemListSerializer
-from .util import get_business_model, get_menuitem_models
-
-
-def create_menuitem_model(model_dict, biz):
-    model = MenuItem(
-        title=model_dict["title"],
-        price=model_dict["price"][0],
-        image=model_dict["img"],
-        business=biz,
-    )
-    model.save()
-    return model
+from .util import get_business_model
 
 
 def getItemsView(request):
@@ -41,13 +24,22 @@ def getItemsView(request):
     response = requests.get(url=ENDPOINT, params=PARAMETERS, auth=BearerAuth(API_KEY))
     json_response = response.json()
 
+    business_distances = {}
     for business in json_response["businesses"]:
-        biz_mod = get_business_model(business)
+        business_distances[business["alias"]] = business["distance"]
+        get_business_model(business)
 
-    return HttpResponse(response.text)
-
-
-def getMenuItems(request):
-    item = MenuItem.objects.get(pk=1)
-    ser = MenuItemListSerializer(item, context={"distance": "100"})
-    return HttpResponse(JSONRenderer().render(ser.data))
+    items = (
+        MenuItem.objects.distinct()
+        .filter(business__method_for_query__in=["MU", "RC"])
+        .filter(business__slug__in=list(business_distances.keys()))
+        .order_by("?")[:10]
+    )
+    ret = []
+    for item in items:
+        ser = MenuItemListSerializer(
+            item,
+            context={"distance": business_distances[item.business.slug]},
+        )
+        ret.append(ser.data)
+    return HttpResponse(json.dumps(ret, indent=2))
