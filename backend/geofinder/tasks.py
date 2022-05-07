@@ -1,7 +1,7 @@
 from celery import shared_task
 from celery.utils.log import get_task_logger
 
-from .util import attempt_to_scrape_rec
+from .scrape import attempt_to_scrape_rec
 
 logger = get_task_logger(__name__)
 

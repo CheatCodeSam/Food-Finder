@@ -8,10 +8,19 @@ services:
     container_name: ff-server
     environment:
       - CELERY_BROKER=redis://redis:6379
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=postgres
+      - SQL_USER=postgres
+      - SQL_PASSWORD=postgres
+      - SQL_HOST=db
+      - SQL_PORT=5432
     volumes:
       - ./backend:/usr/src/app
     depends_on:
       - redis
+      - db
+    ports:
+      - "8000:8000"
   redis:
     image: redis
     ports:
@@ -24,7 +33,24 @@ services:
     environment:
       - RESULT_BACKEND=redis://redis:6379
       - C_FORCE_ROOT=true
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=postgres
+      - SQL_USER=postgres
+      - SQL_PASSWORD=postgres
+      - SQL_HOST=db
+      - SQL_PORT=5432
     volumes:
       - ./backend:/usr/src/app
     depends_on:
       - redis
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+
+volumes:
+  postgres_data:

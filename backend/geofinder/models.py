@@ -16,7 +16,7 @@ class Business(models.Model):
     location = models.CharField(max_length=100, null=False, blank=True)
     city = models.CharField(max_length=100, null=False, blank=False)
     state = models.CharField(max_length=100, null=False, blank=False)
-    url = models.CharField(max_length=100, null=False, blank=False)
+    url = models.CharField(max_length=255, null=False, blank=False)
     method_for_query = models.CharField(
         max_length=2,
         choices=MethodForQuery.choices,
