@@ -1,8 +1,7 @@
 import requests
-from bs4 import BeautifulSoup
 
-from ..models import Business, MenuItem
-from ..scrape import scrape_menu, create_menuitem_model
+from ..models import Business
+from ..scrape import create_menuitem_model, scrape_menu
 from ..tasks import attempt_to_scrape_rec_task
 
 

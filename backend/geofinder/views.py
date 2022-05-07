@@ -1,6 +1,8 @@
+import json
+
 import requests
 from django.http import HttpResponse
-import json
+
 from .auth import BearerAuth
 from .models import MenuItem
 from .serializers import MenuItemListSerializer

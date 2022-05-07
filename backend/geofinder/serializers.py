@@ -1,5 +1,3 @@
-from cmath import log
-
 from rest_framework import serializers
 
 from .models import MenuItem
