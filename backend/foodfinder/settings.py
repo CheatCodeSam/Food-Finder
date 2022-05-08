@@ -40,6 +40,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth.registration",
+    "dj_rest_auth",
     "geofinder",
     "users",
 ]
@@ -147,3 +153,19 @@ CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379")
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
+
+SITE_ID = 1
+
+REST_USE_JWT = True
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+}
+
+JWT_AUTH_COOKIE = "ff-auth"
+JWT_AUTH_REFRESH_COOKIE = "ff-refresh"
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
