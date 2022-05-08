@@ -17,4 +17,4 @@ RUN poetry install
 
 COPY . .
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000","--access-logfile", "-", "foodfinder.wsgi" ]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000","--access-logfile", "-", "--reload", "foodfinder.wsgi" ]
