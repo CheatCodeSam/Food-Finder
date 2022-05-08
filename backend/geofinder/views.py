@@ -13,8 +13,25 @@ def getItemsView(request):
     API_KEY = "vA48KOFhclsGtE0mdZ51qu2PccDsTb125ocpup71nwDZHgLV6zFsaY-Ysc-AIdMVfcqxF_l1j8Vdj0aNLzSsGvc6mSTDCF4j6sRC2Fr1pEBTwGIlvuuH5E0QxSwpYnYx"
     ENDPOINT = "https://api.yelp.com/v3/businesses/search"
 
-    lat = request.GET.get("lat", None)
+    location = {}
+
+    address = request.GET.get("address", "false")
     long = request.GET.get("long", None)
+    lat = request.GET.get("lat", None)
+    has_latlong = lat and long
+
+    if address.lower() == "true" and request.user or not has_latlong and request.user:
+        location = {"location": request.user.address}
+    elif has_latlong:
+        long = request.GET.get("long", None)
+        lat = request.GET.get("lat", None)
+        location = {
+            "latitude": lat,
+            "longitude": long,
+        }
+    else:
+        return HttpResponse("[]")
+
     term = request.GET.get("term", "food")
     radius = request.GET.get("radius", "10000")
     price = request.GET.get("price", "1,2,3,4")
@@ -23,11 +40,10 @@ def getItemsView(request):
         "term": term,
         "limit": 20,
         "category": "food",
-        "latitude": lat,
-        "longitude": long,
         "radius": int(radius),
         "price": price,
-    }
+    } | location
+
     response = requests.get(url=ENDPOINT, params=PARAMETERS, auth=BearerAuth(API_KEY))
     json_response = response.json()
 
