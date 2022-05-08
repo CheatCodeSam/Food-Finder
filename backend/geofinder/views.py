@@ -2,10 +2,11 @@ import json
 
 import requests
 from django.http import HttpResponse
+from rest_framework import mixins, viewsets
 
 from .auth import BearerAuth
 from .models import MenuItem
-from .serializers import MenuItemListSerializer
+from .serializers import MenuItemListSerializer, MenuItemSerializer
 from .util import get_business_model
 
 
@@ -66,3 +67,8 @@ def getItemsView(request):
         )
         ret.append(ser.data)
     return HttpResponse(json.dumps(ret, indent=2))
+
+
+class MenuItemViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
