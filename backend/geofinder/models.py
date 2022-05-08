@@ -17,6 +17,7 @@ class Business(models.Model):
     city = models.CharField(max_length=255, null=False, blank=False)
     state = models.CharField(max_length=255, null=False, blank=False)
     url = models.CharField(max_length=255, null=False, blank=False)
+    yelp_id = models.CharField(max_length=255, null=False, blank=False, unique=True)
     method_for_query = models.CharField(
         max_length=2,
         choices=MethodForQuery.choices,

@@ -9,6 +9,7 @@ def create_business_model(model_dict):
 
     model = Business(
         title=model_dict["name"],
+        yelp_id=model_dict["id"],
         slug=model_dict["alias"],
         price=model_dict["price"] if "price" in model_dict else "?",
         rating=model_dict["rating"],

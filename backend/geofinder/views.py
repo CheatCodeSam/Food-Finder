@@ -15,13 +15,16 @@ def getItemsView(request):
 
     lat = request.GET.get("lat", None)
     long = request.GET.get("long", None)
+    term = request.GET.get("term", "food")
+    radius = request.GET.get("radius", "10000")
 
     PARAMETERS = {
-        "term": "food(all)",
+        "term": term,
         "limit": 20,
+        "category": "food",
         "latitude": lat,
         "longitude": long,
-        "radius": 10000,
+        "radius": int(radius),
     }
     response = requests.get(url=ENDPOINT, params=PARAMETERS, auth=BearerAuth(API_KEY))
     json_response = response.json()
