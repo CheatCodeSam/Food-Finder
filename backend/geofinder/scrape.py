@@ -7,7 +7,9 @@ from .models import Business, MenuItem
 def create_menuitem_model(model_dict, biz):
     model = MenuItem(
         title=model_dict["title"],
-        price="10",
+        price=model_dict["price"][0]
+        if "price" in model_dict and len(model_dict["price"]) > 0
+        else "?",
         image=model_dict["img"],
         business=biz,
     )
