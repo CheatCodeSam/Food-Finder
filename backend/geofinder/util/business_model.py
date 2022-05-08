@@ -3,16 +3,22 @@ from .menuitem_models import get_menuitem_models
 
 
 def create_business_model(model_dict):
+    has_location = (
+        "address1" in model_dict["location"] and model_dict["location"]["address1"]
+    )
+
     model = Business(
         title=model_dict["name"],
         slug=model_dict["alias"],
-        price="$",
+        price=model_dict["price"] if "price" in model_dict else "?",
         rating=model_dict["rating"],
-        location="..",
+        location=model_dict["location"]["address1"] if has_location else "?",
         city=model_dict["location"]["city"],
         state=model_dict["location"]["state"],
         url=model_dict["url"],
     )
+    if not has_location:
+        model.method_for_query = "NA"
     model.save()
     get_menuitem_models(model)
     return model
