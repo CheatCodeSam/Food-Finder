@@ -26,7 +26,21 @@ const filtersUp = {
     },
 }
 
-const FilterModal = ({ onExit }) => {
+const FilterModal = ({ onExit, onSubmit }) => {
+    const [distance, setDistance] = React.useState(10000)
+    const handleDistanceChange = (event, newValue) => {
+        setDistance(newValue)
+    }
+
+    const [price, setPrice] = React.useState(4)
+    const handlePriceChange = (event, newValue) => {
+        setPrice(newValue)
+    }
+
+    const submit = () => {
+        onSubmit({ price: price, distance: distance })
+    }
+
     return (
         <FilterBackdrop onClick={onExit}>
             <motion.div
@@ -40,7 +54,11 @@ const FilterModal = ({ onExit }) => {
                 animate="visible"
                 exit="exit"
             >
-                <Filter />
+                <Filter
+                    distance={distance}
+                    handleDistanceChange={handleDistanceChange}
+                    handlePriceChange={handlePriceChange}
+                />
                 <Box
                     sx={{
                         position: "absolute",
@@ -52,8 +70,8 @@ const FilterModal = ({ onExit }) => {
                     }}
                 >
                     <NavButton>
-                        <IconButton>
-                            <Close onClick={onExit} />
+                        <IconButton onClick={onExit}>
+                            <Close />
                         </IconButton>
                     </NavButton>
                 </Box>
@@ -68,7 +86,7 @@ const FilterModal = ({ onExit }) => {
                         alignItems: "center",
                     }}
                 >
-                    <ApplyButton onClick={onExit}>APPLY</ApplyButton>
+                    <ApplyButton onClick={submit}>APPLY</ApplyButton>
                 </div>
             </motion.div>
         </FilterBackdrop>
@@ -77,6 +95,7 @@ const FilterModal = ({ onExit }) => {
 
 FilterModal.propTypes = {
     onExit: PropTypes.any,
+    onSubmit: PropTypes.func,
 }
 
 const NavButton = styled.div`
@@ -114,6 +133,5 @@ const ApplyButton = styled.button`
         box-shadow: box-shadow: -10px -10px 0px 0px rgba(154, 159, 174, 0.2);
     }
 `
-
 
 export default FilterModal

@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import FilterListIcon from "@mui/icons-material/FilterList"
 import IconButton from "@mui/material/IconButton"
 
-const Search = ({ setShowFilter, onSubmitTerm }) => {
+const Search = ({ showFilter, onSubmitTerm }) => {
     const [value, setValue] = useState("")
 
     const handleChange = (event) => {
@@ -32,7 +32,7 @@ const Search = ({ setShowFilter, onSubmitTerm }) => {
                     </form>
                 </SearchBar>
                 <FilterIconWrapper>
-                    <IconButton onClick={() => setShowFilter(true)}>
+                    <IconButton onClick={showFilter}>
                         <FilterListIcon />
                     </IconButton>
                 </FilterIconWrapper>
@@ -42,7 +42,7 @@ const Search = ({ setShowFilter, onSubmitTerm }) => {
 }
 
 Search.propTypes = {
-    setShowFilter: PropTypes.func,
+    showFilter: PropTypes.func,
     onSubmitTerm: PropTypes.func,
 }
 

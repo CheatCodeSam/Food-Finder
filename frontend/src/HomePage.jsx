@@ -4,13 +4,30 @@ import fetchFood from "./fetchFood"
 import Navigation from "./Navigation"
 import { FoodCardContainer as FoodCards } from "./Components/FoodCards"
 import Search from "./Search"
+import FilterModal from "./FilterModal"
+
+import { AnimatePresence } from "framer-motion"
 
 const HomePage = () => {
     const [DetailView, setDetailView] = useState(false)
+    const [showFilter, setShowFilter] = useState(false)
+
+    const exitFilter = () => {
+        setShowFilter(false)
+    }
+
+    const submitFilter = (params) => {
+        setDistance(params.distance)
+        setPrice(params.price)
+        repingApi(geo, { term, distance: params.distance, price: params.price })
+        setShowFilter(false)
+    }
 
     const [food, setFood] = useState([])
     const [geo, setGeo] = useState(true)
-    const [term, setTerm] = useState(true)
+    const [term, setTerm] = useState("")
+    const [distance, setDistance] = useState(10000)
+    const [price, setPrice] = useState(4)
     const currentIndexRef = useRef(0)
 
     useEffect(() => {
@@ -59,9 +76,9 @@ const HomePage = () => {
         updateCurrentIndex(currentIndexRef.current - 1)
         if (currentIndexRef.current === 5) {
             if (geo) {
-                getFoodFromLocation({ term }, getMoreFood)
+                getFoodFromLocation({ term, distance, price }, getMoreFood)
             } else {
-                getFoodFromAddress({ term }, getMoreFood)
+                getFoodFromAddress({ term, distance, price }, getMoreFood)
             }
         }
     }
@@ -78,14 +95,24 @@ const HomePage = () => {
 
     const resetSearchTerm = (_term) => {
         setTerm(_term)
-        repingApi(geo, { term: _term })
+        repingApi(geo, { term: _term, distance, price })
     }
 
     return (
         <Box>
-            <Search setShowFilter={{}} onSubmitTerm={resetSearchTerm} />
+            <Search
+                setShowFilter={{}}
+                onSubmitTerm={resetSearchTerm}
+                showFilter={() => setShowFilter(true)}
+            />
             <FoodCards food={food} swipeRight={swipeRight} outOfFrame={outOfFrame} />
             <Navigation usingGeo={geo} onToggleGeo={resetGeo} />
+
+            <AnimatePresence initial={false} exitBeforeEnter={true}>
+                {showFilter && (
+                    <FilterModal onSubmit={submitFilter} onExit={exitFilter} />
+                )}
+            </AnimatePresence>
         </Box>
     )
 }
