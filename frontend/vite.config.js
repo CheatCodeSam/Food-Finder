@@ -7,6 +7,9 @@ import { VitePWA } from "vite-plugin-pwa"
 export default defineConfig({
     server: {
         host: true,
+        hmr: {
+            port: 80,
+        },
     },
     plugins: [react(), eslintPlugin(), VitePWA({})],
 })
