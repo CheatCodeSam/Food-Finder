@@ -1,8 +1,16 @@
 import PropTypes from "prop-types"
-import React, { useState } from 'react'
-import styled from '@emotion/styled'
+import React, { useState } from "react"
+import styled from "@emotion/styled"
 import { Box, Container, Typography, IconButton, Avatar } from "@mui/material"
-import { Close, Person, Star, LocationOn, Settings, HelpCenter, PowerSettingsNew } from "@mui/icons-material"
+import {
+    Close,
+    Person,
+    Star,
+    LocationOn,
+    Settings,
+    HelpCenter,
+    PowerSettingsNew,
+} from "@mui/icons-material"
 import { motion, AnimatePresence } from "framer-motion"
 import SideMenuBackdrop from "./SideMenuBackdrop"
 import Profile from "./Profile"
@@ -19,7 +27,7 @@ const slideIn = {
             type: "spring",
             damping: 40,
             stiffness: 500,
-        }
+        },
     },
     exit: {
         x: "-100vh",
@@ -29,13 +37,9 @@ const slideIn = {
 
 const SideMenu = ({ onExit }) => {
     const [showProfile, setShowProfile] = useState(false)
-    const [showAddress, setShowAddress] = useState(false)
 
     const exitProfile = () => {
         setShowProfile(false)
-    }
-    const exitAddress = () => {
-        setShowAddress(false)
     }
 
     return (
@@ -48,7 +52,7 @@ const SideMenu = ({ onExit }) => {
                     padding: "5px",
                     width: "55vw",
                     height: "100%",
-                    backgroundColor: "#f5f5f5"
+                    backgroundColor: "#f5f5f5",
                 }}
                 onClick={(e) => e.stopPropagation()}
                 variants={slideIn}
@@ -57,8 +61,12 @@ const SideMenu = ({ onExit }) => {
                 exit="exit"
             >
                 <Box>
-                    <Container sx={{ display: "flex", flexDirection: "row", marginTop: 2 }}>
-                        <Container><StyledAvatar src="https://i.imgur.com/R9Qt4Le.png" /></Container>
+                    <Container
+                        sx={{ display: "flex", flexDirection: "row", marginTop: 2 }}
+                    >
+                        <Container>
+                            <StyledAvatar src="https://i.imgur.com/R9Qt4Le.png" />
+                        </Container>
                         <Container>
                             <IconButton>
                                 <NavButton>
@@ -76,29 +84,20 @@ const SideMenu = ({ onExit }) => {
                     <List onClick={() => setShowProfile(true)}>
                         <Person /> <ListText>Profile</ListText>
                     </List>
-                    <List>
-                        <Star /> <ListText>Favorites</ListText>
-                    </List>
-                    <List onClick={() => setShowAddress(true)}>
-                        <LocationOn /> <ListText>Location</ListText>
-                    </List>
-                    <List>
-                        <Settings /> <ListText>Preferences</ListText>
-                    </List>
-                    <List>
-                        <HelpCenter /> <ListText>Support</ListText>
-                    </List>
                 </Box>
                 <Box sx={{ position: "absolute", bottom: 30 }}>
-                    <LogOutButton><PowerSettingsNew />Log Out</LogOutButton>
+                    <LogOutButton>
+                        <PowerSettingsNew />
+                        Log Out
+                    </LogOutButton>
                 </Box>
             </motion.div>
 
             <AnimatePresence>
-                {showProfile && <Profile showProfile={showProfile} onExit={exitProfile} />}
-                {showAddress && <Address showAddress={showAddress} onExit={exitAddress} />}
+                {showProfile && (
+                    <Profile showProfile={showProfile} onExit={exitProfile} />
+                )}
             </AnimatePresence>
-
         </SideMenuBackdrop>
     )
 }
@@ -114,11 +113,11 @@ const SideMenuContainer = styled(Box)`
     padding: 1;
     width: 55vw;
     height: 100%;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
 `
 const StyledAvatar = styled(Avatar)`
     width: 100px;
-    height: 100px;    
+    height: 100px;
     box-shadow: 0px 8px 40px 0px rgba(255, 197, 41, 0.25);
     &:active {
         transform: translate(2px, 2px);
@@ -150,12 +149,12 @@ const ListText = styled(StyledTypography)`
 `
 const List = styled.li`
     margin-top: 25px;
-    color: #9A9FAE;
+    color: #9a9fae;
     display: flex;
     align-items: center;
     &:active {
         transform: translate(2px, 2px);
-        color: #FFC529;
+        color: #ffc529;
     }
 `
 const LogOutButton = styled.button`  

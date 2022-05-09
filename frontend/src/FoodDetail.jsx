@@ -25,13 +25,7 @@ const FoodRating = styled(FoodBusiness)`
     padding: 2px;
     border-radius: 5px;
 `
-const FoodDistance = styled(StyledTypography)`
-    background-color: #ebebeb;
-    margin: 0;
-    padding: 2px;
-    border-radius: 5px;
-    font-weight: 600;
-`
+
 const FoodPrice = styled(StyledTypography)`
     color: #ffc529;
     font-weight: bold;

@@ -4,8 +4,7 @@ import React from "react"
 import { Paper, Grid, Box, Typography, IconButton } from "@mui/material"
 import { History as HistoryIcon, Person as PersonIcon } from "@mui/icons-material"
 
-const Header = ({setShowSideMenu}) => {
-  
+const Header = ({ onShowSideMenu }) => {
     return (
         <>
             <Paper square sx={{ position: "fixed", top: 0, left: 0, width: "100%" }}>
@@ -18,9 +17,8 @@ const Header = ({setShowSideMenu}) => {
                 >
                     <Grid item xs>
                         <Box textAlign={"left"}>
-                            <IconButton onClick={()=>setShowSideMenu(true)}>
-                                <PersonIcon sx={{ p: 1 }} fontSize="large" 
-                                />
+                            <IconButton onClick={onShowSideMenu}>
+                                <PersonIcon sx={{ p: 1 }} fontSize="large" />
                             </IconButton>
                         </Box>
                     </Grid>
@@ -38,14 +36,12 @@ const Header = ({setShowSideMenu}) => {
                     </Grid>
                 </Grid>
             </Paper>
-           
         </>
     )
 }
 
 Header.propTypes = {
-  setModalOpen: PropTypes.func,
-  setShowSideMenu: PropTypes.func
+    onShowSideMenu: PropTypes.func,
 }
 
 export default Header

@@ -4,6 +4,7 @@ import { Box } from "@mui/material"
 import HomePage from "./HomePage"
 
 import "modern-normalize/modern-normalize.css"
+import SignedInPage from "./SignedInPage"
 
 const App = () => {
     const lock = useRef(null)
@@ -14,7 +15,7 @@ const App = () => {
 
     return (
         <Box ref={lock}>
-            <HomePage />
+            <SignedInPage />
         </Box>
     )
 }
