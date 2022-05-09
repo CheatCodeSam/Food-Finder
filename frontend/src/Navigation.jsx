@@ -1,7 +1,7 @@
+import React from "react"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
 import styled from "@emotion/styled"
-import { Undo, Clear, Favorite, Info } from "@mui/icons-material"
+import { House, LocationOn } from "@mui/icons-material"
 import IconButton from "@mui/material/IconButton"
 
 const NavigationContainer = styled.div`
@@ -9,9 +9,9 @@ const NavigationContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     padding: 20px 0px 40px 0px;
-    background-color: #f5f5f5;
     width: 100%;
     bottom: 0;
+    z-index: -1;
 `
 const NavigationButton = styled.div`
     width: 50px;
@@ -29,34 +29,21 @@ const NavigationButton = styled.div`
     }
 `
 
-const Navigation = ({setSwipeDirection}) => { 
-    const [name , setName ] = useState(['undo', 'right', 'left']);
-
-    const swipe = (name) => {
-        setSwipeDirection(name)
-        console.log("set swipe direction to: " + name)
-    }
-
+const Navigation = (props) => {
     return (
-        <>
         <NavigationContainer>
             <NavigationButton>
-                <IconButton onClick={() => swipe(name[0])}><Undo /></IconButton>
-            </NavigationButton>
-            <NavigationButton>
-                <IconButton onClick={() => swipe(name[1])}><Favorite /></IconButton>
-            </NavigationButton>
-            <NavigationButton>
-                <IconButton onClick={() => swipe(name[2])}><Clear /></IconButton>
+                <IconButton onClick={props.onToggleGeo}>
+                    {props.usingGeo ? <LocationOn /> : <House />}
+                </IconButton>
             </NavigationButton>
         </NavigationContainer>
-        </>
     )
 }
 
 Navigation.propTypes = {
-  setSwipeDirection: PropTypes.func
+    onToggleGeo: PropTypes.func,
+    usingGeo: PropTypes.bool,
 }
-
 
 export default Navigation

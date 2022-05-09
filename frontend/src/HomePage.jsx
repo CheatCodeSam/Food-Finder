@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Box } from "@mui/system"
 import fetchFood from "./fetchFood"
-
+import Navigation from "./Navigation"
 import { FoodCardContainer as FoodCards } from "./Components/FoodCards"
 
 const HomePage = () => {
     const [DetailView, setDetailView] = useState(false)
+
     const [food, setFood] = useState([])
+    const [geo, setGeo] = useState(true)
     const currentIndexRef = useRef(0)
 
     useEffect(() => {
@@ -44,6 +46,7 @@ const HomePage = () => {
     return (
         <Box>
             <FoodCards food={food} swipeRight={swipeRight} outOfFrame={outOfFrame} />
+            <Navigation usingGeo={geo} onToggleGeo={() => setGeo(!geo)} />
         </Box>
     )
 }
