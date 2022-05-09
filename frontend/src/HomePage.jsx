@@ -43,9 +43,7 @@ const HomePage = () => {
 
     return (
         <Box>
-            <Box sx={{ position: "relative" }}>
-                <FoodCards food={food} swipeRight={swipeRight} outOfFrame={outOfFrame} />
-            </Box>
+            <FoodCards food={food} swipeRight={swipeRight} outOfFrame={outOfFrame} />
         </Box>
     )
 }
