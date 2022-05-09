@@ -1,53 +1,51 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { Box } from "@mui/system"
-import { AnimatePresence } from "framer-motion"
+import fetchFood from "./fetchFood"
 
-import Header from "./Header"
-import Search from "./Search"
 import FoodCards from "./FoodCards"
-import DetailModal from "./DetailModal"
-import Navigation from "./Navigation"
-import SideMenu from "./SideMenu"
-import FilterModal from "./FilterModal"
 
 const HomePage = () => {
     const [DetailView, setDetailView] = useState(false)
-    const [foodItem, setFoodItem] = useState({})
-    const [swipeDirection, setSwipeDirection] = useState("")
-    const [showSideMenu, setShowSideMenu] = useState(false)
-    const [showFilter, setShowFilter] = useState(false)
+    const [food, setFood] = useState([])
+    const currentIndexRef = useRef(0)
 
-    const swipeRight = (foodItem) => {
-        setDetailView(true)
-        setFoodItem(foodItem)
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition((geopos) => {
+            const lat = geopos.coords.latitude
+            const long = geopos.coords.longitude
+            getFood(lat, long).catch(console.error)
+        })
+    }, [])
+
+    const getFood = async (lat, long) => {
+        let _food = await fetchFood(lat, long)
+        _food = _food.filter((item) => !food.map((f) => f.id).includes(item.id))
+        setFood(_food.concat(food.slice(0, 5)))
+        updateCurrentIndex(_food.length + currentIndexRef.current)
     }
-    const exitDetailView = () => {
-        setDetailView(false)
+
+    const updateCurrentIndex = (val) => (currentIndexRef.current = val)
+
+    const outOfFrame = () => {
+        updateCurrentIndex(currentIndexRef.current - 1)
+        if (currentIndexRef.current === 5) {
+            navigator.geolocation.getCurrentPosition((geopos) => {
+                const lat = geopos.coords.latitude
+                const long = geopos.coords.longitude
+                getFood(lat, long).catch(console.error)
+            })
+        }
     }
-    const exitSideMenu = () => {
-        setShowSideMenu(false)
-    }
-    const exitFilter = () => {
-        setShowFilter(false)
+
+    const swipeRight = (food) => {
+        console.log("right :)", food)
     }
 
     return (
         <Box>
-            <Header setShowSideMenu={setShowSideMenu} />
-            <Search setShowFilter={setShowFilter} />
             <Box sx={{ position: "relative" }}>
-                <FoodCards swipeRight={swipeRight} swipeDirection={swipeDirection} />
+                <FoodCards food={food} swipeRight={swipeRight} outOfFrame={outOfFrame} />
             </Box>
-            <Navigation setSwipeDirection={setSwipeDirection} />
-            {DetailView && <DetailModal dish={foodItem} onExit={exitDetailView} />}
-
-            <AnimatePresence
-                initial={false}
-                exitBeforeEnter={true}
-            >
-                {showFilter && <FilterModal showFilter={showFilter} onExit={exitFilter} />}
-                {showSideMenu && <SideMenu showSideMenu={showSideMenu} onExit={exitSideMenu} />}
-            </AnimatePresence>
         </Box>
     )
 }
