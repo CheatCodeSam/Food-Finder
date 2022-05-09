@@ -1,8 +1,9 @@
 import React, { useRef, useEffect } from "react"
 import { disableBodyScroll } from "body-scroll-lock"
 import { Box } from "@mui/material"
-import "modern-normalize/modern-normalize.css"
 import HomePage from "./HomePage"
+
+import "modern-normalize/modern-normalize.css"
 
 const App = () => {
     const lock = useRef(null)

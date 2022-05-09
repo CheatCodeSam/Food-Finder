@@ -54,7 +54,7 @@ FoodCard.propTypes = {
     img: PropTypes.string,
     title: PropTypes.string,
     distance: PropTypes.number,
-    price: PropTypes.array,
+    price: PropTypes.string,
 }
 
 export default FoodCard

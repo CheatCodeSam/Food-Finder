@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import PropTypes from "prop-types"
 import { Box } from "@mui/material"
-import { Undo, Clear, Favorite, Info } from "@mui/icons-material"
-import IconButton from "@mui/material/IconButton"
 import TinderCard from "react-tinder-card"
 import styled from "@emotion/styled"
 import fetchFood from "./fetchFood"
@@ -50,7 +48,6 @@ const FoodCards = (props) => {
         if (direction === "right") {
             props.swipeRight(dish)
         }
-        console.log(direction)
     }
 
     const outOfFrame = (idx) => {
@@ -65,32 +62,29 @@ const FoodCards = (props) => {
     }
 
     return (
-        <Box>
-            <FoodCardContainer>
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    {food.map((dish, index) => (
-                        <SwipeCard
-                            key={dish.img}
-                            onSwipe={({swipeDirection}) => swiped(dish, {swipeDirection})}
-                            onCardLeftScreen={() => outOfFrame(index)}
-                        >
-                            <FoodCard
-                                img={dish.img}
-                                title={dish.title}
-                                distance={dish.distance}
-                                price={dish.price}
-                            />
-                        </SwipeCard>
-                    ))}
-                </Box>
-            </FoodCardContainer>
-        </Box>
+        <FoodCardContainer>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+                {food.map((dish, index) => (
+                    <SwipeCard
+                        key={dish.id}
+                        onSwipe={(dir) => swiped(dish, dir)}
+                        onCardLeftScreen={() => outOfFrame(index)}
+                    >
+                        <FoodCard
+                            img={dish.image}
+                            title={dish.title}
+                            distance={dish.distance}
+                            price={dish.price}
+                        />
+                    </SwipeCard>
+                ))}
+            </Box>
+        </FoodCardContainer>
     )
 }
 
 FoodCards.propTypes = {
-  swipeDirection: PropTypes.string,
-  swipeRight: PropTypes.func
+    swipeRight: PropTypes.func,
 }
 
 export default FoodCards

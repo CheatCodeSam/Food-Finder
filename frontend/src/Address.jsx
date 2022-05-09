@@ -1,11 +1,9 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { TextField, Box, Typography, Button, Grid, Stack, IconButton } from "@mui/material"
+import { TextField, Box, Typography, Button, Stack, IconButton } from "@mui/material"
 import { Close } from "@mui/icons-material"
-import { useFormControl } from "@mui/material/FormControl"
 import styled from "@emotion/styled"
 import { motion } from "framer-motion"
-
 
 const slideIn = {
     hidden: {
@@ -18,7 +16,7 @@ const slideIn = {
             type: "spring",
             damping: 40,
             stiffness: 500,
-        }
+        },
     },
     exit: {
         x: "-100vh",
@@ -29,15 +27,15 @@ const slideIn = {
 const Address = ({ onExit }) => {
     return (
         <motion.div
-            style={{ 
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100vw", 
-            height: "100%" ,
-            backgroundColor: "#fff",
-            display: "flex",
-            justifyContent: "center"
+            style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100vw",
+                height: "100%",
+                backgroundColor: "#fff",
+                display: "flex",
+                justifyContent: "center",
             }}
             onClick={(e) => e.stopPropagation()}
             variants={slideIn}
@@ -45,7 +43,7 @@ const Address = ({ onExit }) => {
             animate="visible"
             exit="exit"
         >
-            <Box sx={{backgroundColor: "cyan", width: "100vw", padding: 1 }}>
+            <Box sx={{ backgroundColor: "cyan", width: "100vw", padding: 1 }}>
                 <IconButton>
                     <NavButton>
                         <Close onClick={onExit} />
@@ -60,23 +58,13 @@ const Address = ({ onExit }) => {
                         borderRadius: "20px",
                     }}
                 >
-                    <StyledTextField
-                        label="Street Address"
-                        variant="outlined"
-                    />
-                    <StyledTextField
-                        label="City"
-                        variant="outlined"
-                    />
-                    <StyledTextField
-                        label="State"
-                        variant="outlined"
-                    />
-                    <StyledTextField
-                        label="Postal Code"
-                        variant="outlined"
-                    />
-                    <Button variant="contained" onClick={onExit}>Save</Button>
+                    <StyledTextField label="Street Address" variant="outlined" />
+                    <StyledTextField label="City" variant="outlined" />
+                    <StyledTextField label="State" variant="outlined" />
+                    <StyledTextField label="Postal Code" variant="outlined" />
+                    <Button variant="contained" onClick={onExit}>
+                        Save
+                    </Button>
                 </Stack>
             </Box>
         </motion.div>
@@ -84,7 +72,7 @@ const Address = ({ onExit }) => {
 }
 
 Address.propTypes = {
-  onExit: PropTypes.func
+    onExit: PropTypes.func,
 }
 
 const StyledTextField = styled(TextField)`
@@ -107,4 +95,4 @@ const NavButton = styled.div`
 }
 `
 
-export default Address;
+export default Address
