@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { Box } from "@mui/system"
 import fetchFood from "./fetchFood"
 
-import FoodCards from "./FoodCards"
+import { FoodCardContainer as FoodCards } from "./Components/FoodCards"
 
 const HomePage = () => {
     const [DetailView, setDetailView] = useState(false)

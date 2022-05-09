@@ -29,7 +29,6 @@ const FoodCard = ({ img, title, distance, price }) => {
             sx={{
                 width: "95vw",
                 height: "70vh",
-                // boxShadow: "2px 2px 10px 0px rgba(154, 159, 174, 1)",
             }}
         >
             <CardMedia component="img" image={img} width="100%" height="100%" />
