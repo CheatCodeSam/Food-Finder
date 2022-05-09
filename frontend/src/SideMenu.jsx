@@ -76,8 +76,9 @@ const SideMenu = ({ onExit }) => {
                         </Container>
                     </Container>
                     <Container sx={{ marginTop: 2 }}>
-                        <StyledTypography variant="h5">Name</StyledTypography>
-                        <StyledTypography variant="subtitle4">email</StyledTypography>
+                        <StyledTypography variant="h5">
+                            {localStorage.getItem("username")}
+                        </StyledTypography>
                     </Container>
                 </Box>
                 <Box sx={{ marginTop: 5, marginLeft: 1 }}>

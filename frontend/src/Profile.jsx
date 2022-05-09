@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import {
     TextField,
     Box,
@@ -14,6 +14,8 @@ import { Close } from "@mui/icons-material"
 import styled from "@emotion/styled"
 import { motion } from "framer-motion"
 import { useFormik } from "formik"
+import Cookies from "js-cookie"
+import axios from "axios"
 
 const slideIn = {
     hidden: {
@@ -35,14 +37,25 @@ const slideIn = {
 }
 
 const Profile = ({ onExit }) => {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [address, setAddress] = useState("")
+
+    useEffect(() => {
+        const response = axios.get(`api/users/${localStorage.getItem("id")}`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+        console.log(response)
+    }, [])
+
     const formik = useFormik({
         initialValues: {
-            email: "foobar@example.com",
-            name: "foobar",
-            address: "foobar",
+            address: "",
         },
         onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2))
+            axios.put(`api/users/${localStorage.getItem("id")}/`, values, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            })
         },
     })
     return (
@@ -79,7 +92,9 @@ const Profile = ({ onExit }) => {
                     <Container sx={{ display: "flex", justifyContent: "center" }}>
                         <Box sx={{ marginTop: 2 }}>
                             <StyledAvatar src="https://i.imgur.com/R9Qt4Le.png" />
-                            <StyledTypography variant="h5">Name</StyledTypography>
+                            <StyledTypography variant="h5">
+                                {localStorage.getItem("username")}
+                            </StyledTypography>
                         </Box>
                     </Container>
                 </Container>
@@ -93,20 +108,9 @@ const Profile = ({ onExit }) => {
                 >
                     <form onSubmit={formik.handleSubmit} style={{ display: "contents" }}>
                         <StyledTextField
-                            label="Name"
-                            variant="outlined"
-                            value={formik.values.name}
-                            onChange={formik.handleChange}
-                        />
-                        <StyledTextField
-                            label="E-mail"
-                            variant="outlined"
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
-                        />
-                        <StyledTextField
                             label="Address"
                             variant="outlined"
+                            id="address"
                             value={formik.values.address}
                             onChange={formik.handleChange}
                         />

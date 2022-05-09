@@ -10,7 +10,8 @@ const fetchFood = async (params) => {
             params.term ? "&term=" + params.term : ""
         }${params.distance ? "&radius=" + params.distance : ""}${
             params.price ? "&price=" + priceVals[params.price] : ""
-        }`
+        }`,
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
     )
 
     return response.data

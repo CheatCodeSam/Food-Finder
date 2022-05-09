@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from datetime import timedelta
 import os
 from pathlib import Path
 
@@ -171,3 +172,5 @@ JWT_AUTH_COOKIE = "ff-auth"
 JWT_AUTH_REFRESH_COOKIE = "ff-refresh"
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+ACCESS_TOKEN_LIFETIME = timedelta(days=7)
