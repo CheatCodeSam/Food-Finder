@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import axios from "axios"
 import PropTypes from "prop-types"
 import { Box, Card, CardMedia, Container, Typography } from "@mui/material"
 import { Star, LocationOn } from "@mui/icons-material"
@@ -48,7 +49,14 @@ const FoodDescription = styled(StyledTypography)`
     font-weight: 500;
 `
 
-const FoodDetail = ({ dish }) => {
+const FoodDetail = ({ id }) => {
+    const [dish, setDish] = useState({ business: {} })
+
+    useEffect(async () => {
+        const response = await axios.get("api/menuitem/" + id)
+        setDish(response.data)
+    }, [id])
+
     return (
         <Box>
             <Card
@@ -57,13 +65,18 @@ const FoodDetail = ({ dish }) => {
                     borderRadius: "10px",
                 }}
             >
-                <CardMedia component="img" image={dish.img} width="100%" height="100%" />
+                <CardMedia
+                    component="img"
+                    image={dish.image}
+                    width="100%"
+                    height="100%"
+                />
             </Card>
 
             <FoodDetailContainer>
                 <FoodTitle variant="h4">{dish.title}</FoodTitle>
                 <FoodBusiness variant="h5">
-                    <LocationOn style={{ color: "FFC529" }} /> {dish.business}
+                    <LocationOn style={{ color: "FFC529" }} /> {dish.business.title}
                 </FoodBusiness>
                 <Container
                     sx={{
@@ -75,18 +88,15 @@ const FoodDetail = ({ dish }) => {
                     <div>
                         <FoodRating variant="subtitle4">
                             <Star style={{ fontSize: "20", color: "009933" }} />{" "}
-                            {dish.rating}
+                            {dish.business.rating}
                         </FoodRating>
                     </div>
-                    <FoodDistance>
-                        {(dish.distance * 0.000621371192).toFixed(2)} mi
-                    </FoodDistance>
                 </Container>
                 <FoodPrice variant="h4">{dish.price}</FoodPrice>
                 <FoodDescription>
-                    <p>{dish.address} </p>
+                    <p>{dish.business.location} </p>
                     <p>
-                        {dish.city}, {dish.state}{" "}
+                        {dish.business.city}, {dish.business.state}{" "}
                     </p>
                 </FoodDescription>
             </FoodDetailContainer>
@@ -95,7 +105,7 @@ const FoodDetail = ({ dish }) => {
 }
 
 FoodDetail.propTypes = {
-    dish: PropTypes.object,
+    id: PropTypes.number,
 }
 
 export default FoodDetail

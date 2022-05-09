@@ -7,13 +7,19 @@ import Search from "./Search"
 import FilterModal from "./FilterModal"
 
 import { AnimatePresence } from "framer-motion"
+import DetailModal from "./DetailModal"
 
 const HomePage = () => {
     const [DetailView, setDetailView] = useState(false)
     const [showFilter, setShowFilter] = useState(false)
+    const [swipedRight, setSwipedRight] = useState(0)
 
     const exitFilter = () => {
         setShowFilter(false)
+    }
+
+    const exitDetail = () => {
+        setDetailView(false)
     }
 
     const submitFilter = (params) => {
@@ -85,6 +91,8 @@ const HomePage = () => {
 
     const swipeRight = (food) => {
         console.log("right :)", food)
+        setSwipedRight(food.id)
+        setDetailView(true)
     }
 
     const resetGeo = () => {
@@ -112,6 +120,7 @@ const HomePage = () => {
                 {showFilter && (
                     <FilterModal onSubmit={submitFilter} onExit={exitFilter} />
                 )}
+                {DetailView && <DetailModal id={swipedRight} onExit={exitDetail} />}
             </AnimatePresence>
         </Box>
     )
