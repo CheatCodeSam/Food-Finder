@@ -19,13 +19,11 @@ const SwipeCard = styled(TinderCard)`
 
 const FoodCards = (props) => {
     const [food, setFood] = useState([])
-    const [currentIndex, setCurrentIndex] = useState(0)
-    const [lastDirection, setLastDirection] = useState()
-
     const currentIndexRef = useRef(0)
 
     const getFood = async (lat, long) => {
-        const _food = await fetchFood(lat, long)
+        let _food = await fetchFood(lat, long)
+        _food = _food.filter((item) => !food.map((f) => f.id).includes(item.id))
         setFood(_food.concat(food.slice(0, 5)))
         updateCurrentIndex(_food.length + currentIndexRef.current)
     }
@@ -39,19 +37,17 @@ const FoodCards = (props) => {
     }, [])
 
     const updateCurrentIndex = (val) => {
-        setCurrentIndex(val)
         currentIndexRef.current = val
         console.log(val)
     }
 
     const swiped = (dish, direction) => {
-        setLastDirection(direction)
         if (direction === "right") {
             props.swipeRight(dish)
         }
     }
 
-    const outOfFrame = (idx) => {
+    const outOfFrame = () => {
         updateCurrentIndex(currentIndexRef.current - 1)
         if (currentIndexRef.current === 5) {
             navigator.geolocation.getCurrentPosition((geopos) => {
@@ -65,11 +61,11 @@ const FoodCards = (props) => {
     return (
         <FoodCardContainer>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-                {food.map((dish, index) => (
+                {food.map((dish) => (
                     <SwipeCard
                         key={dish.id}
                         onSwipe={(dir) => swiped(dish, dir)}
-                        onCardLeftScreen={() => outOfFrame(index)}
+                        onCardLeftScreen={outOfFrame}
                     >
                         <FoodCard
                             img={dish.image}
