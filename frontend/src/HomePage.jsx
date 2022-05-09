@@ -3,12 +3,14 @@ import { Box } from "@mui/system"
 import fetchFood from "./fetchFood"
 import Navigation from "./Navigation"
 import { FoodCardContainer as FoodCards } from "./Components/FoodCards"
+import Search from "./Search"
 
 const HomePage = () => {
     const [DetailView, setDetailView] = useState(false)
 
     const [food, setFood] = useState([])
     const [geo, setGeo] = useState(true)
+    const [term, setTerm] = useState(true)
     const currentIndexRef = useRef(0)
 
     useEffect(() => {
@@ -30,6 +32,7 @@ const HomePage = () => {
     const repingApi = async (newGeo, params) => {
         currentIndexRef.current = 0
         setFood([])
+        console.log(params)
         if (newGeo) {
             getFoodFromLocation(params, getFood)
         } else {
@@ -56,9 +59,9 @@ const HomePage = () => {
         updateCurrentIndex(currentIndexRef.current - 1)
         if (currentIndexRef.current === 5) {
             if (geo) {
-                getFoodFromLocation({}, getMoreFood)
+                getFoodFromLocation({ term }, getMoreFood)
             } else {
-                getFoodFromAddress({}, getMoreFood)
+                getFoodFromAddress({ term }, getMoreFood)
             }
         }
     }
@@ -73,8 +76,14 @@ const HomePage = () => {
         repingApi(newGeo, {})
     }
 
+    const resetSearchTerm = (_term) => {
+        setTerm(_term)
+        repingApi(geo, { term: _term })
+    }
+
     return (
         <Box>
+            <Search setShowFilter={{}} onSubmitTerm={resetSearchTerm} />
             <FoodCards food={food} swipeRight={swipeRight} outOfFrame={outOfFrame} />
             <Navigation usingGeo={geo} onToggleGeo={resetGeo} />
         </Box>

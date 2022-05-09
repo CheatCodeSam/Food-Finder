@@ -1,11 +1,21 @@
 import PropTypes from "prop-types"
-import React from "react"
+import React, { useState } from "react"
 import styled from "@emotion/styled"
 import SearchIcon from "@mui/icons-material/Search"
 import FilterListIcon from "@mui/icons-material/FilterList"
 import IconButton from "@mui/material/IconButton"
 
-const Search = ({ setShowFilter }) => {
+const Search = ({ setShowFilter, onSubmitTerm }) => {
+    const [value, setValue] = useState("")
+
+    const handleChange = (event) => {
+        setValue(event.target.value)
+    }
+    const handleSubmit = (event) => {
+        onSubmitTerm(value)
+        event.preventDefault()
+    }
+
     return (
         <>
             <SearchContainer>
@@ -13,11 +23,17 @@ const Search = ({ setShowFilter }) => {
                     <SearchIconWrapper>
                         <SearchIcon />
                     </SearchIconWrapper>
-                    <SearchInput placeholder="Find food..." />
+                    <form onSubmit={handleSubmit} style={{ display: "contents" }}>
+                        <SearchInput
+                            placeholder="Find food..."
+                            value={value}
+                            onChange={handleChange}
+                        />
+                    </form>
                 </SearchBar>
                 <FilterIconWrapper>
-                    <IconButton>
-                        <FilterListIcon onClick={() => setShowFilter(true)} />
+                    <IconButton onClick={() => setShowFilter(true)}>
+                        <FilterListIcon />
                     </IconButton>
                 </FilterIconWrapper>
             </SearchContainer>
@@ -27,6 +43,7 @@ const Search = ({ setShowFilter }) => {
 
 Search.propTypes = {
     setShowFilter: PropTypes.func,
+    onSubmitTerm: PropTypes.func,
 }
 
 const SearchContainer = styled.div`
@@ -36,7 +53,6 @@ const SearchContainer = styled.div`
     display: flex;
     width: 100%;
     height: 50px;
-    background-color: #f5f5f5;
 `
 const SearchBar = styled.div`
     display: flex;
