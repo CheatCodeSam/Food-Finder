@@ -24,11 +24,11 @@ const FoodCards = (props) => {
 
     const currentIndexRef = useRef(0)
 
-    const getFood = useCallback(async (lat, long) => {
+    const getFood = async (lat, long) => {
         const _food = await fetchFood(lat, long)
-        setFood(_food)
-        updateCurrentIndex(_food.length)
-    }, [])
+        setFood(_food.concat(food.slice(0, 5)))
+        updateCurrentIndex(_food.length + currentIndexRef.current)
+    }
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((geopos) => {
@@ -41,6 +41,7 @@ const FoodCards = (props) => {
     const updateCurrentIndex = (val) => {
         setCurrentIndex(val)
         currentIndexRef.current = val
+        console.log(val)
     }
 
     const swiped = (dish, direction) => {
@@ -51,8 +52,8 @@ const FoodCards = (props) => {
     }
 
     const outOfFrame = (idx) => {
-        updateCurrentIndex(idx)
-        if (idx < 1) {
+        updateCurrentIndex(currentIndexRef.current - 1)
+        if (currentIndexRef.current === 5) {
             navigator.geolocation.getCurrentPosition((geopos) => {
                 const lat = geopos.coords.latitude
                 const long = geopos.coords.longitude

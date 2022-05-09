@@ -1,10 +1,9 @@
 import PropTypes from "prop-types"
 import React from "react"
 import styled from "@emotion/styled"
-import SearchIcon from '@mui/icons-material/Search'
-import FilterListIcon from '@mui/icons-material/FilterList';
+import SearchIcon from "@mui/icons-material/Search"
+import FilterListIcon from "@mui/icons-material/FilterList"
 import IconButton from "@mui/material/IconButton"
-import { motion } from "framer-motion"
 
 const Search = ({ setShowFilter }) => {
     return (
@@ -22,13 +21,12 @@ const Search = ({ setShowFilter }) => {
                     </IconButton>
                 </FilterIconWrapper>
             </SearchContainer>
-
         </>
     )
 }
 
 Search.propTypes = {
-    setShowFilter: PropTypes.func
+    setShowFilter: PropTypes.func,
 }
 
 const SearchContainer = styled.div`
@@ -48,7 +46,7 @@ const SearchBar = styled.div`
     background-color: #fff;
     padding: 5px;
     margin: 5px;
-    border: 1px solid #C4C7D0;
+    border: 1px solid #c4c7d0;
     border-radius: 10px;
 `
 const SearchIconWrapper = styled.div`
@@ -58,14 +56,14 @@ const SearchIconWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #C4C7D0;
+    color: #c4c7d0;
 `
 const SearchInput = styled.input`
     padding: 2px;
     width: 100%;
     height: 100%;
     border: none;
-    font-family: 'Montserrat', sans-serif; 
+    font-family: "Montserrat", sans-serif;
 `
 const FilterIconWrapper = styled.div`
     height: 40px;
@@ -75,7 +73,7 @@ const FilterIconWrapper = styled.div`
     justify-content: center;
     margin: 5px;
     background-color: #fff;
-    color: #FFC529;
+    color: #ffc529;
     border: none;
     border-radius: 10px;
     box-shadow: 2px 2px 5px 0px rgba(154, 159, 174, 0.2);
