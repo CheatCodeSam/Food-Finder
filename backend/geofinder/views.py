@@ -21,7 +21,12 @@ def getItemsView(request):
     lat = request.GET.get("lat", None)
     has_latlong = lat and long
 
-    if address.lower() == "true" and request.user or not has_latlong and request.user:
+    if (
+        address.lower() == "true"
+        and request.user.is_authenticated
+        or not has_latlong
+        and request.user.is_authenticated
+    ):
         location = {"location": request.user.address}
     elif has_latlong:
         long = request.GET.get("long", None)

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers:
+        - name: worker
+          image: cheatcodesam/foodfinder-server
+          command: ["celery"]
+          args: ["--app", "foodfinder", "worker", "--loglevel=info"]
+          env:
+            - name: C_FORCE_ROOT
+              value: "true"
+            - name: CELERY_BROKER
+              value: redis://redis-cluster-ip-service:6379
+            - name: SQL_ENGINE
+              value: django.db.backends.postgresql
+            - name: SQL_DATABASE
+              value: postgres
+            - name: SQL_USER
+              value: postgres
+            - name: SQL_PASSWORD
+              value: postgres
+            - name: SQL_HOST
+              value: postgres-cluster-ip-service
+            - name: SQL_PORT
+              value: "5432"
